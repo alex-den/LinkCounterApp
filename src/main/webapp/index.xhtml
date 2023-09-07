@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"  
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Link Counter</title>
+	<style>
+	.loading-icon {
+		font-size: 3rem;
+		color: var(--primary-color);
+	}
+	.ui-datatable-empty-message {
+    	display: none;
+	}
+	
+	</style>
+</h:head>
+<h:body>
+	<h:form id="form">
+	  <div class="ui-fluid">
+		 <p:growl id="msgs" showDetail="true" life="2000" sticky="false" skipDetailIfEqualsSummary="true"/>
+		    <p:panel id="input-panel" styleClass="ui-fluid" header="Анализируемая страница">
+				<p:inputText 
+					id="pageInp" 
+					style="margin-bottom: 1%;"
+					 maxlength="2083"
+					 validatorMessage="Ошибка! Длинна строки должна быт меньше 2083" value="#{linkCounterController.analyzePage}">
+				<f:validateLength maximum="2083" />  
+				</p:inputText>  
+				<p:commandButton 
+					style="margin-left: 45%; width: 200px" 
+					value="Анализровать"
+					actionListener="#{linkCounterController.getDataForPage()}" 
+					onclick="PF('dataTable').getPaginator().setPage(0)"
+					update=":form:msgs,tab-panel" icon="ui-icon-check" />
+			</p:panel>
+			<p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+					<br/>
+					<h:panelGrid columns="2" cellpadding="5" >
+						<div class="text-center">
+							<i class="pi pi-spin pi-spinner loading-icon" ></i>
+						</div>
+						<h:outputText value="Идет обработка ..." />
+					</h:panelGrid>
+			</p:dialog>
+			<p:panel id="tab-panel" header="Обнаруженные ссылки">
+		       	<p:dataTable 
+		       	         id="eventsDT" 
+		       	         widgetVar="dataTable"
+		       	         style="margin-bottom: 1%;" 
+		       	         showGridlines="true" 
+		       	         resizableColumns="true"
+		       	         reflow="true"
+		       	         var="linkItem" 
+		       	         value="#{linkCounterController.linkList}" 
+		       	         selectionMode="single"
+	                     selection="#{linkCounterController.selectedItem}" 
+	                     rowKey="#{linkItem.id}"
+	                     rows="5"
+                     	 paginator="true" 
+                     	 paginatorPosition="top"
+                     	 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} из {totalRecords} записей"
+                         rowsPerPageTemplate="5,10,{ShowAll|'Все'}"
+	                     >
+	            <p:ajax 
+	            	event="rowSelect" 
+	            	global="false" 
+	            	listener="#{linkCounterController.selectLinkRow}" 
+	            	update=":form:msgs,form:input-panel"/>
+					<p:column headerText="№ п/п" width="50">
+						<h:outputText value="#{linkItem.id}" />
+					</p:column>
+	
+					<p:column headerText="Имя ссылки" width="300">
+						<h:outputText value="#{linkItem.name}" />
+					</p:column>
+	
+					<p:column headerText="Адрес ссылки">
+						<h:outputText value="#{linkItem.url}" />
+					</p:column>
+	
+				</p:dataTable>
+				<p:commandButton style="margin-left: 45%;width: 200px;"  value="Очистить" actionListener="#{linkCounterController.cleareTable()}" update="tab-panel" global="false"  />
+			</p:panel>
+	   </div>
+	</h:form>
+
+  </h:body>
+</html>
