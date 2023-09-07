@@ -10,6 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
+/** LinkCounterAppApplication.java 
+ *  Main spring boot app class with add jsf
+ */
+
 @SpringBootApplication
 public class LinkCounterAppApplication {
 
@@ -19,10 +23,7 @@ public class LinkCounterAppApplication {
 
 	@Bean
 	ServletRegistrationBean jsfServletRegistration(ServletContext servletContext) {
-		// spring boot only works if this is set
 		servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
-
-		// registration
 		ServletRegistrationBean srb = new ServletRegistrationBean();
 		srb.setServlet(new FacesServlet());
 		srb.setUrlMappings(Arrays.asList("*.xhtml"));

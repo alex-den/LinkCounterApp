@@ -14,10 +14,20 @@ import com.example.entity.LinkItem;
 
 import lombok.extern.slf4j.Slf4j;
 
+/** LinkCounterServiceImpl.java 
+ *  Implementation @LinkCounterService
+ *  Use Jsoup for parse html page
+ */
+
 @Service
 @Slf4j 
 public class LinkCounterServiceImpl implements LinkCounterService {
 
+	/**  
+	 * Method get url for analyze parse page and return found links 
+	 * @param url page for analyze
+	 * @return list with found links
+	 */
 	@Override
 	public List<LinkItem> getLinksData(String url) {
 		List<LinkItem> result = new ArrayList<>();
