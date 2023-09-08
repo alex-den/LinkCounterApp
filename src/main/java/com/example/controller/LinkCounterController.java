@@ -7,11 +7,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import com.example.entity.LinkItem;
 import com.example.service.LinkCounterService;
@@ -29,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @ManagedBean
-@ViewScoped
+@SessionScope
 @RequiredArgsConstructor
 @Getter
 @Setter

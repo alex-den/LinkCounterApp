@@ -16,12 +16,18 @@
 	<name>LinkCounterApp</name>
 	<description>Spring Boot project </description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -63,12 +69,13 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-			<!--       <scope>provided</scope> -->
+			<scope>provided</scope> 
 		</dependency>
 
 	</dependencies>
 
 	<build>
+		<finalName>link-counter</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

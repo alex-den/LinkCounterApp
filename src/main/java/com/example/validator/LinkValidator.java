@@ -107,7 +107,7 @@ public class LinkValidator {
 	}
 
 	/**
-	 * Method get url, try to send request check Response Code != 404???
+	 * Method get url, try to send request check Response Code 
 	 * 
 	 * @param url string for connect
 	 * @return Bollean value
@@ -124,7 +124,7 @@ public class LinkValidator {
 			connection.setRequestMethod("GET");
 			connection.connect();
 			log.info(" Responce code url : " + connection.getResponseCode());
-			if (connection.getResponseCode() != 404) {
+			if (!(connection.getResponseCode() + "").startsWith("4")) {
 				log.info(" Url works: " + url);
 				result = true;
 			}
