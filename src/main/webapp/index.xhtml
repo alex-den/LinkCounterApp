@@ -57,10 +57,11 @@
 		       	         resizableColumns="true"
 		       	         reflow="true"
 		       	         var="linkItem" 
+		       	         rowIndexVar="index"
 		       	         value="#{linkCounterController.linkList}" 
 		       	         selectionMode="single"
 	                     selection="#{linkCounterController.selectedItem}" 
-	                     rowKey="#{linkItem.id}"
+	                     rowKey="#{index}"
 	                     rows="5"
                      	 paginator="true" 
                      	 paginatorPosition="top"
@@ -74,7 +75,7 @@
 	            	listener="#{linkCounterController.selectLinkRow}" 
 	            	update=":form:msgs,form:input-panel"/>
 					<p:column headerText="№ п/п" width="50">
-						<h:outputText value="#{linkItem.id}" />
+						<h:outputText value="#{index}" />
 					</p:column>
 	
 					<p:column headerText="Имя ссылки" width="300">
