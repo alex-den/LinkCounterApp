@@ -31,7 +31,7 @@ public class LinkValidator {
 	/**
 	 * REGEX with pattern for check latin input
 	 */
-	private static String REGEX_LAT = ".*\\p{IsLatin}.*";;
+	private static String REGEX_LAT = ".*\\p{IsLatin}.*";
 
 	/**
 	 * Method for check syntax input
@@ -123,8 +123,8 @@ public class LinkValidator {
 			connection.setConnectTimeout(20000);
 			connection.setRequestMethod("HEAD");
 			connection.connect();
-			log.info(" Responce code url : " + connection.getResponseCode());
-			if (!(connection.getResponseCode() + "").startsWith("4")) {
+			log.info(" Responce code url : {}", connection.getResponseCode());
+			if (connection.getResponseCode() != 404) {
 				log.info(" Url works: {}", url);
 				result = true;
 			}
