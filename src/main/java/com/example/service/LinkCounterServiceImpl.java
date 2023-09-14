@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.entity.LinkItem;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 /** LinkCounterServiceImpl.java 
  *  Implementation @LinkCounterService
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Service
-@Slf4j 
+@Log4j2
 public class LinkCounterServiceImpl implements LinkCounterService {
 
 	/**  

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * LinkValidator.java Class for validation url Use REGEX and HttpURLConnection
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Component
-@Slf4j
+@Log4j2
 public class LinkValidator {
 
 	/**
@@ -40,7 +40,7 @@ public class LinkValidator {
 	 * @return Boolean value
 	 */
 	private Boolean checkCorrectLink(String url) {
-		log.info(" Check url: " + url);
+		log.info(" Check url: {}", url);
 		Pattern patt = Pattern.compile(REGEX_URL);
 		Matcher matcher = patt.matcher(url);
 		return matcher.matches();
@@ -53,7 +53,7 @@ public class LinkValidator {
 	 * @return Boolean value
 	 */
 	private Boolean checkLatinHost(String host) {
-		log.info(" Check is Latin host: " + host);
+		log.info(" Check is Latin host: {}", host);
 		Pattern patt = Pattern.compile(REGEX_LAT);
 		Matcher matcher = patt.matcher(host);
 		return matcher.matches();
@@ -129,7 +129,7 @@ public class LinkValidator {
 				result = true;
 			}
 		} catch (IOException e) {
-			log.error(" No connection : {}",  url);
+			log.error(" No connection : {}", url);
 			log.error(" Issue in : ", e);
 		}
 		return result;
