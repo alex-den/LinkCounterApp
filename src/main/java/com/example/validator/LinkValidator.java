@@ -121,7 +121,7 @@ public class LinkValidator {
 			HttpURLConnection.setFollowRedirects(false);
 			HttpURLConnection connection = (HttpURLConnection) new URL(connectUrl).openConnection();
 			connection.setConnectTimeout(20000);
-			connection.setRequestMethod("GET");
+			connection.setRequestMethod("HEAD");
 			connection.connect();
 			log.info(" Responce code url : " + connection.getResponseCode());
 			if (!(connection.getResponseCode() + "").startsWith("4")) {
