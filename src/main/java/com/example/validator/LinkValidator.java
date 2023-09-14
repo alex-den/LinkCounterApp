@@ -70,7 +70,7 @@ public class LinkValidator {
 		List<String> convertLabels = labels.stream()
 				.map(s -> java.net.IDN.toASCII(s)).collect(Collectors.toList());
 		String result = String.join(".", convertLabels);
-		log.info(" Converted cyrilic host: " + result);
+		log.info(" Converted cyrilic host: {}", result);
 		return result;
 	}
 
@@ -85,22 +85,22 @@ public class LinkValidator {
 		try {
 			URL u = new URL(url);
 			String host = u.getHost();
-			log.info(" Host Url : " + host);
+			log.info(" Host Url : {} ", host);
 			if (!checkLatinHost(host)) {
-				log.info(" Non Latin host: " + host);
+				log.info(" Non Latin host: {} ", host);
 				String protocol = u.getProtocol();
-				log.info(" Protocol Url : " + protocol);
+				log.info(" Protocol Url : {}", protocol);
 				String data = "";
 				if ((url.lastIndexOf(host) + host.length()) < url.length()) {
 					data = url.substring((url.lastIndexOf(host) + host.length()), url.length());
 				}
 				connectUrl = protocol + "://" + convertCyrillicHost(host) + data;
 			} else {
-				log.info(" Latin host: " + host);
+				log.info(" Latin host: {}", host);
 				connectUrl = url;
 			}
 		} catch (IOException e) {
-			log.error(" Bad url: " + url);
+			log.error(" Bad url: {}", url);
 			log.error(" Issue in : ", e);
 		}
 		return connectUrl;
@@ -114,9 +114,9 @@ public class LinkValidator {
 	 */
 	private Boolean checkLinkWorked(String url) {
 		Boolean result = false;
-		log.info(" Start check url : " + url);
+		log.info(" Start check url : {}", url);
 		String connectUrl = getUrlForConnect(url);
-		log.info(" Try to connect Url : " + connectUrl);
+		log.info(" Try to connect Url : {}", connectUrl);
 		try {
 			HttpURLConnection.setFollowRedirects(false);
 			HttpURLConnection connection = (HttpURLConnection) new URL(connectUrl).openConnection();
@@ -125,11 +125,11 @@ public class LinkValidator {
 			connection.connect();
 			log.info(" Responce code url : " + connection.getResponseCode());
 			if (!(connection.getResponseCode() + "").startsWith("4")) {
-				log.info(" Url works: " + url);
+				log.info(" Url works: {}", url);
 				result = true;
 			}
 		} catch (IOException e) {
-			log.error(" No connection : " + url);
+			log.error(" No connection : {}",  url);
 			log.error(" Issue in : ", e);
 		}
 		return result;

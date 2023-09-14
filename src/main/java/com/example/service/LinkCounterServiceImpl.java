@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.entity.LinkItem;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 /** LinkCounterServiceImpl.java 
@@ -26,10 +27,17 @@ public class LinkCounterServiceImpl implements LinkCounterService {
 	 * @return list with found links
 	 */
 	@Override
-	@SneakyThrows
 	public List<LinkItem> getLinksData(String url) {
-		return Jsoup.connect(url).get().select("a[href]").stream()
-				.peek(link -> log.info(" Found : " + link.attr("href")))
-				.map(link -> new LinkItem(link.text(), link.absUrl("href"))).collect(Collectors.toList());
+		List<LinkItem> result = new ArrayList<>();
+		try {
+			result = Jsoup.connect(url).get().select("a[href]").stream()
+					.peek(link -> log.info(" Found : {}", link.attr("href")))
+					.map(link -> new LinkItem(link.text(), link.absUrl("href"))).collect(Collectors.toList());
+		} catch (IOException e) {
+			log.error(" Bad url: {}", url);
+			log.error(" Issue in : ", e);
+		}
+		return result;
+		
 	}
 }
